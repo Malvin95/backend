@@ -1,0 +1,11 @@
+services:
+
+  postgres:
+    image: "postgres:17.2"
+    ports:
+      - "3306:3306"
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "typeorm"
+

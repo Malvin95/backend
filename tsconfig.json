@@ -1,0 +1,39 @@
+{
+   "compilerOptions": {
+      "lib": [
+         "es2023"
+      ],
+      "types": ["node"],
+      "target": "es2022",
+      "module": "esnext",
+      "moduleResolution": "bundler",
+      "rootDir": "./",
+      "outDir": "./dist",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "sourceMap": true,
+      
+      "strict": true,
+      "esModuleInterop": true,
+      "isolatedModules": true,
+      "noUncheckedSideEffectImports": true,
+      "moduleDetection": "force",
+      "allowImportingTsExtensions": true,
+      "rewriteRelativeImportExtensions": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "resolveJsonModule": true,
+   },
+   "ts-node": {
+    "esm": true,
+    "experimentalEsm": true,
+    "resolveJsonModule": true
+   },
+   "include": [
+    "**/*.ts"
+   ],
+   "exclude": [
+    "node_modules",
+    "dist"
+   ]
+}

@@ -1,0 +1,27 @@
+{
+   "name": "backend",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "type": "module",
+   "devDependencies": {
+      "@types/express": "^5.0.6",
+      "@types/morgan": "^1.9.10",
+      "@types/node": "^20.19.43",
+      "ts-node": "^10.9.2",
+      "tsx": "^4.22.4",
+      "typescript": "^5.9.3"
+   },
+   "dependencies": {
+      "express": "^5.2.1",
+      "morgan": "^1.11.0",
+      "mysql2": "^3.22.5",
+      "nodemon": "^3.1.14",
+      "reflect-metadata": "^0.2.2",
+      "typeorm": "1.0.0"
+   },
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "dev": "nodemon --watch . --ext ts,js --exec tsx src/index.ts",
+      "typeorm": "typeorm-ts-node-commonjs"
+   }
+}
