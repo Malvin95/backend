@@ -4,6 +4,7 @@
    "description": "Awesome project developed with TypeORM.",
    "type": "module",
    "devDependencies": {
+      "@types/cors": "^2.8.19",
       "@types/express": "^5.0.6",
       "@types/morgan": "^1.9.10",
       "@types/node": "^20.19.43",
@@ -12,6 +13,7 @@
       "typescript": "^5.9.3"
    },
    "dependencies": {
+      "cors": "^2.8.6",
       "express": "^5.2.1",
       "morgan": "^1.11.0",
       "mysql2": "^3.22.5",
