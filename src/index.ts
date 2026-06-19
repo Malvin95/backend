@@ -9,6 +9,7 @@ import logger from "morgan";
 
 // Routes
 import simsRouter from "./routes/sims.ts";
+import { initializeDatabase } from "./data-source.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,20 +18,18 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 // Environment-specific origins
-const allowedOrigins = [
-  'http://localhost:3000',  // Development
-  'http://localhost:5173'
-];
+const allowedOrigins = 
+  process.env.NODE_ENV === "production"
+    ? (process.env.ALLOWED_ORIGINS?.split(",") || [])
+    : ["http://localhost:3000", "http://localhost:5173"];
 
 const corsOptions: cors.CorsOptions = {
   origin: (origin, callback) => {
     // Allow requests with no origin (mobile apps, etc.)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'), false);
+      callback(new Error("Not allowed by CORS"));
     }
   },
   credentials: true,
@@ -63,8 +62,19 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   res.status(500).json({ error: "Internal Server Error" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Sim API running on http://localhost:${PORT}`)
-})
+async function startServer() {
+  try {
+    await initializeDatabase();
+    
+    app.listen(PORT, () => {
+      console.log(`Sim API running on http://localhost:${PORT}`)
+    });
+  } catch (error) {
+        console.error("Failed to start server:", error);
+        process.exit(1);
+  }
+}
+
+startServer();
 
 export default app;

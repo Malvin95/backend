@@ -2,26 +2,32 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export type activationStatusType = "pending" | "active" | "failed";
 
-@Entity()
+@Entity("sim_card")
 export class SimCard {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn("increment")
     id: string;
 
-    @Column({ 
-        type: "varchar", 
-    })
+    @Column("varchar",
+        { length: 19, unique: true }
+    )
     iccid: string;
 
-    @Column({
-        type: "varchar",
-        nullable: true
-    })
+    @Column("varchar", { length: 15, nullable: true})
     phoneNumber: string;
 
     @Column({
         type: "set",
         enum: ["pending","active","failed"],
-        default: ["pending"],
+        default: "pending",
     })
     status: activationStatusType;
+
+    @Column("timestamp", { default: () => "CURRENT_TIMESTAMP" })
+    createdAt: Date;
+
+    @Column("timestamp", {
+        default: () => "CURRENT_TIMESTAMP",
+        onUpdate: "CURRENT_TIMESTAMP",
+    })
+    updatedAt: Date;
 }

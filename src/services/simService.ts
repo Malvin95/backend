@@ -18,13 +18,19 @@ export const simService = {
         return `${countryCode}${suffix}`;
     },
 
-    async getAllActiveSimLogs() {
+    async getAllActiveSimLogs(limit: number = 100, page: number = 1) {
         try {
             const simRepo = AppDataSource.getRepository(SimCard);
-            const allData = await simRepo.find();
-            return allData;
-        } catch (e) {
-            console.log(e)
+
+            const offset = (page - 1) * limit;
+            const [items, total] = await simRepo.findAndCount({
+                skip: offset,
+                take: limit,
+            });
+            return { items, total, page, limit };
+        } catch (error: any) {
+            console.log("getAllActiveSimLogs failed", error);
+            throw new Error(`Failed to fetch SIMs: ${error.message}`);
         }
     },
 
@@ -32,15 +38,22 @@ export const simService = {
         try {
             const simRepo = AppDataSource.getRepository(SimCard);
             const simToUpdate = await simRepo.findOneBy({ iccid: searchedIccid});
-            const generatedActivity = this.generateActivationStatus();
-            if (simToUpdate) {
-                simToUpdate.status = generatedActivity;
-                generatedActivity === 'active' ? simToUpdate.phoneNumber = this.generatePhoneNumberFromICCID(searchedIccid) : '';                 
-                await simRepo.save(simToUpdate);
-                return simToUpdate;
+
+            if (!simToUpdate) {
+                throw new Error(`SIM with ICCID ${searchedIccid} not found`);
             }
-        } catch (e) {
-            console.log(e)
+
+            const generatedActivity = this.generateActivationStatus();
+            simToUpdate.status = generatedActivity;
+
+            if (generatedActivity === "active") {
+                simToUpdate.phoneNumber = this.generatePhoneNumberFromICCID(searchedIccid);                 
+            }
+            const updated = await simRepo.save(simToUpdate);
+            return updated;
+        } catch (error: any) {
+            console.log(`updateSimByIccid failed for ${searchedIccid}`, error);
+            throw error;
         }
     }
 }
