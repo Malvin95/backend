@@ -1,0 +1,1 @@
+{"version":3,"file":"simService.d.ts","sourceRoot":"","sources":["../../src/services/simService.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,oBAAoB,EAAE,OAAO,EAAE,MAAM,wBAAwB,CAAC;AAEvE,eAAO,MAAM,UAAU;gCACS,oBAAoB;wCAUZ,MAAM,gBAAe,MAAM,GAAW,MAAM;gCAM/C,MAAM,SAAc,MAAM;;;;;;oCAgBrB,MAAM;CAsB/C,CAAA"}
