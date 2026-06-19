@@ -5,29 +5,29 @@ export type activationStatusType = "pending" | "active" | "failed";
 @Entity("sim_card")
 export class SimCard {
     @PrimaryGeneratedColumn("increment")
-    id: string;
+    id!: string;
 
     @Column("varchar",
         { length: 19, unique: true }
     )
-    iccid: string;
+    iccid!: string;
 
     @Column("varchar", { length: 15, nullable: true})
-    phoneNumber: string;
+    phoneNumber!: string;
 
     @Column({
         type: "set",
         enum: ["pending","active","failed"],
         default: "pending",
     })
-    status: activationStatusType;
+    status!: activationStatusType;
 
     @Column("timestamp", { default: () => "CURRENT_TIMESTAMP" })
-    createdAt: Date;
+    createdAt!: Date;
 
     @Column("timestamp", {
         default: () => "CURRENT_TIMESTAMP",
         onUpdate: "CURRENT_TIMESTAMP",
     })
-    updatedAt: Date;
+    updatedAt!: Date;
 }

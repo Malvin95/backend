@@ -23,8 +23,9 @@
       "typeorm": "1.0.0"
    },
    "scripts": {
-      "start": "ts-node src/index.ts",
+      "start": "tsx src/index.ts",
       "dev": "nodemon --watch . --ext ts,js --exec tsx src/index.ts",
+      "build": "tsc",
       "typeorm": "typeorm-ts-node-commonjs"
    }
 }
